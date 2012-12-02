@@ -1,0 +1,6 @@
+<phpunit bootstrap="./bootstrap.php">
+    <testsuite name="aint framework test suite">
+        <directory suffix="_test.php">./aint</directory>
+        <exclude>./aint/_files/</exclude>
+    </testsuite>
+</phpunit>
