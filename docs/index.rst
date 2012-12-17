@@ -9,9 +9,14 @@ Welcome to aint framework's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
+    introduction
 
+.. getting started
+.. recommended application structure
+.. skeleton_application
+.. coding standard
 
 Indices and tables
 ==================
