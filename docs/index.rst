@@ -12,16 +12,6 @@ Contents:
     :maxdepth: 2
 
     introduction
-
-.. getting started
-.. recommended application structure
-.. skeleton_application
-.. coding standard
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
+    quickstart
+    development
+    reference
