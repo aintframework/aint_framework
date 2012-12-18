@@ -1,5 +1,5 @@
 <?php
-namespace tests\aint\mvc;
+namespace tests\aint\mvc\dispatching_test;
 
 require_once 'aint/mvc/dispatching.php';
 use aint\mvc\dispatching;
@@ -26,7 +26,7 @@ class dispatching_test extends \PHPUnit_Framework_TestCase {
         $router3 = function() use (&$router3_called) {$router3_called = true; return null;};
 
         $request = ' http request';
-        $result = dispatching\dispatch($request, [$router1, $router2, $router3], 'tests\aint\mvc', function() {});
+        $result = dispatching\dispatch($request, [$router1, $router2, $router3], __NAMESPACE__, function() {});
         $this->assertTrue($router1_called);
         $this->assertTrue($router2_called);
         $this->assertFalse($router3_called); // shouldn't get to the third router
@@ -42,7 +42,7 @@ class dispatching_test extends \PHPUnit_Framework_TestCase {
                 routing\route_params => []
             ];
         };
-        $result = dispatching\dispatch('', [$router], 'tests\aint\mvc', function() {});
+        $result = dispatching\dispatch('', [$router], __NAMESPACE__, function() {});
         $this->assertEquals('result', $result);
     }
 
@@ -56,14 +56,14 @@ class dispatching_test extends \PHPUnit_Framework_TestCase {
             $this->assertInstanceOf('aint\common\error', $e);
             return 'error handled!';
         };
-        $result = dispatching\dispatch('', [$router], 'tests\aint\mvc', $error_handler);
+        $result = dispatching\dispatch('', [$router], __NAMESPACE__, $error_handler);
         $this->assertEquals('error handled!', $result);
     }
 
     public function test_dispatch_not_found_error() {
         $router = function() {return null;}; // null for not found
         $error_handler = function($r, $p, $e) {return $e;};
-        $result = dispatching\dispatch('', [$router], 'tests\aint\mvc', $error_handler);
+        $result = dispatching\dispatch('', [$router], __NAMESPACE__, $error_handler);
         $this->assertInstanceOf('aint\mvc\dispatching\not_found_error', $result);
     }
 }

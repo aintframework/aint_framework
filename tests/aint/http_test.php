@@ -1,6 +1,5 @@
 <?php
-// Stubbing header internal function
-namespace tests\aint\mock\http_test\aint\http;
+namespace tests\aint\http_test;
 
 \aint\test\require_mock('aint/http.php', [
     'namespace aint\http' => 'namespace ' . __NAMESPACE__,
@@ -9,12 +8,10 @@ namespace tests\aint\mock\http_test\aint\http;
 ]);
 
 function header($string) {
-    \tests\aint\http_test::$header_called_with[] = $string;
+    \tests\aint\http_test\http_test::$header_called_with[] = $string;
 }
 
-namespace tests\aint;
-
-use tests\aint\mock\http_test\aint\http;
+use tests\aint\http_test as http;
 
 class http_test extends \PHPUnit_Framework_TestCase {
 

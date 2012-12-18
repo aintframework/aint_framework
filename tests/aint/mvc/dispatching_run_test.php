@@ -1,6 +1,6 @@
 <?php
 // Stubbing functions
-namespace tests\aint\mvc\mock\dispatching_run_test\aint\mvc\dispatching;
+namespace tests\aint\mvc\dispatching_run_test;
 
 \aint\test\require_mock('aint/mvc/dispatching.php', [
     'namespace aint\mvc\dispatching' => 'namespace ' . __NAMESPACE__,
@@ -10,7 +10,7 @@ namespace tests\aint\mvc\mock\dispatching_run_test\aint\mvc\dispatching;
 ]);
 
 function dispatch($request, $routers, $actions_namespace, $error_handler) {
-    \tests\aint\mvc\dispatching_run_test::$dispatch_params = [
+    \tests\aint\mvc\dispatching_run_test\dispatching_run_test::$dispatch_params = [
         $request, $routers, $actions_namespace, $error_handler
     ];
     return 'response to be sent';
@@ -21,12 +21,10 @@ function http_build_request_from_globals() {
 }
 
 function http_send_response($response) {
-    \tests\aint\mvc\dispatching_run_test::$send_response_param = $response;
+    \tests\aint\mvc\dispatching_run_test\dispatching_run_test::$send_response_param = $response;
 }
 
-namespace tests\aint\mvc;
-
-use tests\aint\mvc\mock\dispatching_run_test\aint\mvc\dispatching;
+use tests\aint\mvc\dispatching_run_test as dispatching;
 
 class dispatching_run_test extends \PHPUnit_Framework_TestCase {
 

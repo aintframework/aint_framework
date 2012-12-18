@@ -1,6 +1,5 @@
 <?php
-// Stubbing functions
-namespace tests\aint\mvc\mock\dispatching_run_default_test\aint\mvc\dispatching; // todo make it shorter
+namespace tests\aint\mvc\dispatching_run_default_test;
 
 \aint\test\require_mock('aint/mvc/dispatching.php', [
     'namespace aint\mvc\dispatching' => 'namespace ' . __NAMESPACE__,
@@ -13,14 +12,12 @@ function routing_route_root($request, $default_index_action) {
 }
 
 function run($routers, $actions_namespace, $error_handler) {
-    \tests\aint\mvc\dispatching_run_default_test::$run_params = [
+    \tests\aint\mvc\dispatching_run_default_test\dispatching_run_default_test::$run_params = [
         $routers, $actions_namespace, $error_handler
     ];
 }
 
-namespace tests\aint\mvc;
-
-use tests\aint\mvc\mock\dispatching_run_default_test\aint\mvc\dispatching;
+use tests\aint\mvc\dispatching_run_default_test as dispatching;
 
 class dispatching_run_default_test extends \PHPUnit_Framework_TestCase {
 

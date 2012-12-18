@@ -1,5 +1,5 @@
 <?php
-namespace tests\aint;
+namespace tests\aint\common_test;
 
 require_once 'aint/common.php';
 use aint\common;

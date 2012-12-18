@@ -1,5 +1,5 @@
 <?php
-namespace tests\aint\mvc;
+namespace tests\aint\mvc\routing_test;
 
 require_once 'aint/mvc/routing.php';
 use aint\mvc\routing;

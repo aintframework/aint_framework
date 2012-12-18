@@ -1,5 +1,5 @@
 <?php
-namespace tests\aint;
+namespace tests\aint\templating_test;
 
 require_once 'aint/templating.php';
 use aint\templating;
