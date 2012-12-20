@@ -1,4 +1,10 @@
 <?php
+/**
+ * Dispatching mechanisms:
+ *    processing http request,
+ *    routing it to a specific handler
+ *    sending the http response
+ */
 namespace aint\mvc\dispatching;
 
 require_once 'aint/http.php';
@@ -8,8 +14,13 @@ use aint\common;
 require_once 'aint/mvc/routing.php';
 use aint\mvc\routing;
 
-const default_index_action = 'index\index_action';
+/**
+ * Namespace and the name of the default index action
+ */
+const
+default_index_action = 'index\index_action';
 
+/** Error thrown when an http request cannot be routed */
 class not_found_error extends common\error {};
 
 /**
@@ -46,6 +57,17 @@ function run_default($actions_namespace, callable $error_handler) {
         $error_handler);
 }
 
+/**
+ * Dispatches the HTTP request passed, trying to find a fitting router in the routers
+ * stack passed.
+ *
+ * @param $request
+ * @param $routers
+ * @param $actions_namespace
+ * @param $error_handler
+ * @return mixed
+ * @throws not_found_error
+ */
 function dispatch($request, $routers, $actions_namespace, callable $error_handler) {
     foreach ($routers as $router) {
         $route = call_user_func($router, $request);

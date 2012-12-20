@@ -1,4 +1,7 @@
 <?php
+/**
+ * Simple, PHP-based template engine
+ */
 namespace aint\templating;
 
 /**
@@ -7,8 +10,8 @@ namespace aint\templating;
  * Usage example:
  * render_template('/home/alex/my_templates/template.tpl', ['data' => 'Hello World'])
  *
- * @param $template string
- * @param $vars array
+ * @param string
+ * @param array
  * @return string
  */
 function render_template() {

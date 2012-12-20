@@ -1,6 +1,13 @@
 <?php
+/**
+ * Common, general purpose functions
+ */
 namespace aint\common;
 
+/**
+ * Base-Class for all errors, provides array access capabilities
+ * todo: probably get rid of this.
+ */
 class error extends \exception implements \arrayaccess {
     protected $error_data;
 
@@ -28,11 +35,29 @@ class error extends \exception implements \arrayaccess {
     }
 }
 
+/**
+ * Checks if $name parameter is set in $data array
+ * returns it if yes, and if it - returns $default
+ *
+ * No notice or warning is ever triggered
+ *
+ * @param $data
+ * @param $name
+ * @param null $default
+ * @return null
+ */
 function get_param($data, $name, $default = null) {
     return array_key_exists($name, $data)
         ? $data[$name] : $default;
 }
 
+/**
+ * Merges two arrays recursively
+ *
+ * @param array $config1
+ * @param array $config2
+ * @return array
+ */
 function merge_recursive(array $config1, array $config2) {
     foreach ($config2 as $key => $value)
         if (array_key_exists($key, $config1))

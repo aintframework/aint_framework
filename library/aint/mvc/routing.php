@@ -1,16 +1,32 @@
 <?php
+/**
+ * Functions for routing an HTTP request to an action-function and back.
+ */
 namespace aint\mvc\routing;
 
 require_once 'aint/http.php';
 use aint\http; 
 require_once 'aint/common.php';
-use aint\common; 
+use aint\common;
 
-const route_params = 'params';
-const route_action = 'action';
+/**
+ * Route data
+ */
+const
+route_params = 'params',
+route_action = 'action';
 
-const segment_default_function = 'index';
-const function_postfix = '_action';
+/**
+ * Function to be used as default when only controller is specified
+ */
+const
+segment_default_function = 'index'; // todo: introduce default controller as well, to make typical usage simpler
+
+/**
+ * Function postfix, appended to all function names.
+ */
+const
+function_postfix = '_action'; // todo: consider as default for route_root as well or simply get rid of route_roo
 
 /**
  * Routes

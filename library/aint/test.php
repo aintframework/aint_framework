@@ -1,4 +1,7 @@
 <?php
+/**
+ * To be used for code-testing purposes
+ */
 namespace aint\test;
 
 // todo: test, rewrite, use regex, optimize, add recursive require_mock

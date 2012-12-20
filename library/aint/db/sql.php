@@ -1,18 +1,35 @@
 <?php
+/**
+ * SQL specific operations, common for all platforms
+ */
 namespace aint\db\sql;
 
 require_once 'aint/common.php';
-use aint\common; 
+use aint\common;
 
-const select_specification = 'select %s from %s';
-const delete_specification = 'delete from %s';
-const update_specification = 'update %s set %s';
-const insert_specification = 'insert into %s (%s) values (%s)';
-const where_specification = 'where %s';
-const limit_specification = 'limit %s';
+/**
+ * SQL query parts specs
+ */
+const
+select_specification = 'select %s from %s',
+delete_specification = 'delete from %s',
+update_specification = 'update %s set %s',
+insert_specification = 'insert into %s (%s) values (%s)',
+where_specification = 'where %s',
+limit_specification = 'limit %s';
 
+/**
+ * Error thrown if fields listed for a select are neither a wildcard nor an array
+ */
 class bad_columns_error extends common\error{};
 
+/**
+ * Prepares WHERE part of SQL query
+ *
+ * @param $platform_namespace
+ * @param array $where
+ * @return string
+ */
 function prepare_where($platform_namespace, array $where) {
     $quote_identifier = $platform_namespace . '\quote_identifier';
     $quote_value = $platform_namespace . '\quote_value';
@@ -24,6 +41,15 @@ function prepare_where($platform_namespace, array $where) {
         : '';
 }
 
+/**
+ * Prepares SELECT part of sql query
+ *
+ * @param $platform_namespace
+ * @param $columns
+ * @param $table
+ * @return string
+ * @throws bad_columns_error
+ */
 function prepare_select($platform_namespace, $columns, $table) {
     $quote_identifier = $platform_namespace . '\quote_identifier';
     if (is_array($columns))
@@ -33,11 +59,26 @@ function prepare_select($platform_namespace, $columns, $table) {
     return sprintf(select_specification, $columns, $quote_identifier($table));
 }
 
+/**
+ * Prepares DELETE part of sql query
+ *
+ * @param $platform_namespace
+ * @param $table
+ * @return string
+ */
 function prepare_delete($platform_namespace, $table) {
     $quote_identifier = $platform_namespace . '\quote_identifier';
     return sprintf(delete_specification, $quote_identifier($table));
 }
 
+/**
+ * Prepares INSERT part of SQL query
+ *
+ * @param $platform_namespace
+ * @param $table
+ * @param $data
+ * @return string
+ */
 function prepare_insert($platform_namespace, $table, $data) {
     $quote_identifier = $platform_namespace . '\quote_identifier';
     $quote_value = $platform_namespace . '\quote_value';
@@ -47,6 +88,15 @@ function prepare_insert($platform_namespace, $table, $data) {
     return sprintf(insert_specification, $quote_identifier($table), $keys, $values);
 }
 
+
+/**
+ * Prepares UPDATE part of SQL query
+ *
+ * @param $platform_namespace
+ * @param $table
+ * @param $data
+ * @return string
+ */
 function prepare_update($platform_namespace, $table, $data) {
     $quote_identifier = $platform_namespace . '\quote_identifier';
     $quote_value = $platform_namespace . '\quote_value';
