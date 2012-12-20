@@ -13,5 +13,6 @@ Contents:
 
     introduction
     quickstart
-    development
+    guides
     reference
+    development

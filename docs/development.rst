@@ -1,5 +1,5 @@
-Developing aint framework
-=========================
+Development
+===========
 
 Sections:
 
@@ -7,3 +7,4 @@ Sections:
     :maxdepth: 2
 
     development/standard
+    development/testing
