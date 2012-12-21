@@ -10,13 +10,12 @@ use aint\common;
 /**
  * SQL query parts specs
  */
-const
-select_specification = 'select %s from %s',
-delete_specification = 'delete from %s',
-update_specification = 'update %s set %s',
-insert_specification = 'insert into %s (%s) values (%s)',
-where_specification = 'where %s',
-limit_specification = 'limit %s';
+const select_specification = 'select %s from %s',
+      delete_specification = 'delete from %s',
+      update_specification = 'update %s set %s',
+      insert_specification = 'insert into %s (%s) values (%s)',
+      where_specification = 'where %s',
+      limit_specification = 'limit %s';
 
 /**
  * Error thrown if fields listed for a select are neither a wildcard nor an array

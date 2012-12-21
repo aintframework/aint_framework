@@ -10,10 +10,9 @@ use aint\common;
 /**
  * Database Connection parameters
  */
-const
-param_dns = 'dns',
-param_username = 'username',
-param_password = 'password';
+const param_dns = 'dns',
+      param_username = 'username',
+      param_password = 'password';
 
 /**
  * Fetches all resulting records for a query

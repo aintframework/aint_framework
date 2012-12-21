@@ -12,21 +12,18 @@ use aint\common;
 /**
  * Route data
  */
-const
-route_params = 'params',
-route_action = 'action';
+const route_params = 'params',
+      route_action = 'action';
 
 /**
  * Function to be used as default when only controller is specified
  */
-const
-segment_default_function = 'index'; // todo: introduce default controller as well, to make typical usage simpler
+const segment_default_function = 'index'; // todo: introduce default controller as well, to make typical usage simpler
 
 /**
  * Function postfix, appended to all function names.
  */
-const
-function_postfix = '_action'; // todo: consider as default for route_root as well or simply get rid of route_roo
+const function_postfix = '_action'; // todo: consider as default for route_root as well or simply get rid of route_roo
 
 /**
  * Routes

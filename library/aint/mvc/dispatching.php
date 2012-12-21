@@ -17,8 +17,7 @@ use aint\mvc\routing;
 /**
  * Namespace and the name of the default index action
  */
-const
-default_index_action = 'index\index_action';
+const default_index_action = 'index\index_action';
 
 /** Error thrown when an http request cannot be routed */
 class not_found_error extends common\error {};

@@ -7,29 +7,26 @@ namespace aint\http;
 /**
  * Http Request data
  */
-const
-request_scheme = 'scheme',
-request_body = 'body',
-request_path = 'path',
-request_params = 'params',
-request_method = 'method';
+const request_scheme = 'scheme',
+      request_body = 'body',
+      request_path = 'path',
+      request_params = 'params',
+      request_method = 'method';
 
 /**
  * Http Response data
  */
-const
-response_body = 'body',
-response_headers = 'headers',
-response_status = 'status';
+const response_body = 'body',
+      response_headers = 'headers',
+      response_status = 'status';
 
 /**
  * Http Request method types
  */
-const
-request_method_post = 'POST',
-request_method_get = 'GET',
-request_method_put = 'PUT',
-request_method_delete = 'DELETE';
+const request_method_post = 'POST',
+      request_method_get = 'GET',
+      request_method_put = 'PUT',
+      request_method_delete = 'DELETE';
 
 /**
  * Retrieves data about the current HTTP request using PHP's global arrays
