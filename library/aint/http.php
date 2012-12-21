@@ -117,7 +117,7 @@ function build_redirect($location) {
  *
  * @param $response
  * @param $location
- * @return mixed
+ * @return array
  */
 function redirect($response, $location) {
     array_push($response[response_headers], 'Location: ' . $location);
@@ -136,4 +136,14 @@ function send_response($response) {
     echo $response[response_body];
 }
 
-// todo: function to set response's status
+/**
+ * Changes HTTP status in response data
+ *
+ * @param $response
+ * @param $status
+ * @return array
+ */
+function response_status($response, $status) {
+    $response[response_status] = $status;
+    return $response;
+}

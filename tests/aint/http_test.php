@@ -99,4 +99,13 @@ class http_test extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('test body', $body);
         $this->assertEquals(['HTTP/1.1 201', 'Content-Type: text/plain'], self::$header_called_with);
     }
+
+    public function test_response_status() {
+        $response = http\build_response('test body', 200, []);
+        $this->assertEquals(200, $response[http\response_status]);
+        $response = http\response_status($response, 404);
+        $this->assertEquals(404, $response[http\response_status]);
+        // just in case, checking body hasn't changed
+        $this->assertEquals('test body', $response[http\response_body]);
+    }
 }
