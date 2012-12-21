@@ -14,11 +14,6 @@ use aint\common;
 require_once 'aint/mvc/routing.php';
 use aint\mvc\routing;
 
-/**
- * Namespace and the name of the default index action
- */
-const default_index_action = 'index\index_action';
-
 /** Error thrown when an http request cannot be routed */
 class not_found_error extends common\error {};
 
@@ -41,17 +36,14 @@ function run(array $routers, $actions_namespace, callable $error_handler) {
 /**
  * The quickest way to run an application.
  *
- * Uses route_segment and route_root as routers
+ * Uses route_segment as the only router
  * with index\index_action to handle the root
  *
  * @param $actions_namespace string e.g. app\controller\actions
  * @param $error_handler callable
  */
 function run_default($actions_namespace, callable $error_handler) {
-    $route_root = function($request) {
-        return routing\route_root($request, default_index_action);
-    };
-    run([$route_root, '\aint\mvc\routing\route_segment'],
+    run(['\aint\mvc\routing\route_segment'],
         $actions_namespace,
         $error_handler);
 }

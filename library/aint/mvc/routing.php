@@ -18,12 +18,18 @@ const route_params = 'params',
 /**
  * Function to be used as default when only controller is specified
  */
-const segment_default_function = 'index'; // todo: introduce default controller as well, to make typical usage simpler
+const default_function = 'index';
+
+/**
+ * Namespace to be used as default when no URI is provided at all
+ * (the index document)
+ */
+const default_namespace = 'index';
 
 /**
  * Function postfix, appended to all function names.
  */
-const function_postfix = '_action'; // todo: consider as default for route_root as well or simply get rid of route_roo
+const function_postfix = '_action';
 
 /**
  * Routes
@@ -32,18 +38,22 @@ const function_postfix = '_action'; // todo: consider as default for route_root 
  * Routes
  *    /albums is routed to albums\index_action with no parameters
  *
+ *
  * @param $request
  * @return array|null
  */
 function route_segment($request) {
     if (!($path = $request[http\request_path]))
-        return null;
+        return [route_action => default_namespace
+                                . '\\' . default_function
+                                . function_postfix,
+                route_params => []];
     else {
         $params = explode('/', $path);
         $action = array_shift($params) . '\\';
         $action .= (count($params) > 0)
             ? array_shift($params)
-            : segment_default_function;
+            : default_function;
         $action .= function_postfix;
         $params_combined = [];
         foreach ($params as $key => $value)
@@ -52,20 +62,6 @@ function route_segment($request) {
         return [route_action => $action,
                 route_params => $params_combined];
     }
-}
-
-/**
- * Routes / to the $index_action
- *
- * @param $request
- * @param $index_action
- * @return array|null
- */
-function route_root($request, $index_action) {
-    return (!$request[http\request_path])
-        ? [route_action => $index_action,
-           route_params => []]
-        : null;
 }
 
 /**

@@ -33,8 +33,7 @@ class dispatching_run_default_test extends \PHPUnit_Framework_TestCase {
         $this->assertEquals('actions_namespace', self::$run_params[1]);
         $this->assertEquals($error_handler, self::$run_params[2]);
         $routers = self::$run_params[0];
-        $this->assertEquals('\aint\mvc\routing\route_segment', $routers[1]);
-        $this->assertEquals(['request', dispatching\default_index_action], $routers[0]('request'));
+        $this->assertEquals('\aint\mvc\routing\route_segment', $routers[0]);
     }
 
 }
