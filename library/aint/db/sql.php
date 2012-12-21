@@ -4,9 +4,6 @@
  */
 namespace aint\db\sql;
 
-require_once 'aint/common.php';
-use aint\common;
-
 /**
  * SQL query parts specs
  */
@@ -20,7 +17,7 @@ const select_specification = 'select %s from %s',
 /**
  * Error thrown if fields listed for a select are neither a wildcard nor an array
  */
-class bad_columns_error extends common\error{};
+class bad_columns_error extends \exception{};
 
 /**
  * Prepares WHERE part of SQL query

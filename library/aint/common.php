@@ -5,37 +5,6 @@
 namespace aint\common;
 
 /**
- * Base-Class for all errors, provides array access capabilities
- * todo: probably get rid of this, or consider aint\error namespace
- */
-class error extends \exception implements \arrayaccess {
-    protected $error_data;
-
-    public function __construct($error_data = []) {
-        $this->error_data = $error_data;
-    }
-
-    public function offsetExists($key) {
-        return isset($this->error_data[$key]);
-    }
-
-    public function offsetGet($key) {
-        return isset($this->error_data[$key])
-            ? $this->error_data[$key]
-            : null;
-    }
-
-    public function offsetSet($key, $value) {
-        $this->error_data[$key] = $value;
-    }
-
-    public function offsetUnset($key) {
-        if (isset($this->error_data[$key]))
-            unset($this->error_data[$key]);
-    }
-}
-
-/**
  * Checks if $name parameter is set in $data array
  * returns its value if yes, and if not - returns $default
  *

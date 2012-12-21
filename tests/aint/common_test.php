@@ -40,14 +40,4 @@ class common_test extends \PHPUnit_Framework_TestCase {
             ]
         ], common\merge_recursive($array1, $array2));
     }
-
-    public function test_common_error() {
-        $error_data = ['text' => 'error occurred', 'id' => 123];
-        try {
-            throw new common\error($error_data);
-        } catch (common\error $error) {
-            $this->assertEquals('error occurred', $error['text']);
-            $this->assertEquals(123, $error['id']);
-        }
-    }
 }

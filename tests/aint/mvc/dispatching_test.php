@@ -49,11 +49,11 @@ class dispatching_test extends \PHPUnit_Framework_TestCase {
     public function test_dispatch_error_handler() {
         $router = function() {
             return [
-                routing\route_action => function(){throw new \aint\common\error();},
+                routing\route_action => function(){throw new \exception();},
                 routing\route_params => []
             ];};
         $error_handler = function($r, $p, $e){
-            $this->assertInstanceOf('aint\common\error', $e);
+            $this->assertInstanceOf('exception', $e);
             return 'error handled!';
         };
         $result = dispatching\dispatch('', [$router], __NAMESPACE__, $error_handler);

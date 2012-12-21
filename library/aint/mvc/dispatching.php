@@ -9,13 +9,13 @@ namespace aint\mvc\dispatching;
 
 require_once 'aint/http.php';
 use aint\http; 
-require_once 'aint/common.php';
-use aint\common; 
 require_once 'aint/mvc/routing.php';
 use aint\mvc\routing;
 
-/** Error thrown when an http request cannot be routed */
-class not_found_error extends common\error {};
+/**
+ * Error thrown when an http request cannot be routed
+ */
+class not_found_error extends \exception {};
 
 /**
  * Dispatches global http request with routers stack passed
@@ -69,7 +69,7 @@ function dispatch($request, $routers, $actions_namespace, callable $error_handle
         if (empty($route)
             || (!is_callable($action = $route[routing\route_action])
                 && !is_callable($action = $actions_namespace . '\\' . $action)))
-            throw new not_found_error($request);
+            throw new not_found_error();
         return $action($request, $route[routing\route_params]);
     } catch (\exception $error) {
         $params = empty($route) ? [] : $route[routing\route_params];

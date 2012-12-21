@@ -41,7 +41,7 @@ function build_request_from_globals() {
         request_scheme => empty($_SERVER['HTTPS']) ? 'http' : 'https',
         request_body => file_get_contents("php://input"),
         request_path => trim($path, '/'),
-        request_params => array_merge($_GET, $_POST), // todo
+        request_params => array_merge($_GET, $_POST), // todo make these separate, provide functions
         request_method => $_SERVER['REQUEST_METHOD']
     ];
 }
