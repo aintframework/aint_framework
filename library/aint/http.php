@@ -138,3 +138,5 @@ function send_response($response) {
     array_walk($response[response_headers], 'header');
     echo $response[response_body];
 }
+
+// todo: function to set response's status

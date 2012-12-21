@@ -18,6 +18,8 @@ The database we'll create as ``/albums_manager/database/data`` file as it's not 
 .. note::
     Read more about managing shared and not shared dependencies :doc:`in this tutorial </guides/dependencies>`
 
+TODO: db config, local config
+
 Model for this app is designed to use the `Table Data Gateway <http://martinfowler.com/eaaCatalog/tableDataGateway.html>`_ pattern, with ``app\model\db\albums_table`` being this gateway. Let's create it as well, adding functions required to read, write, update and delete data from the ``albums`` table::
 
     insert with comments

@@ -6,7 +6,7 @@ namespace aint\common;
 
 /**
  * Base-Class for all errors, provides array access capabilities
- * todo: probably get rid of this.
+ * todo: probably get rid of this, or consider aint\error namespace
  */
 class error extends \exception implements \arrayaccess {
     protected $error_data;
@@ -37,7 +37,7 @@ class error extends \exception implements \arrayaccess {
 
 /**
  * Checks if $name parameter is set in $data array
- * returns it if yes, and if it - returns $default
+ * returns its value if yes, and if not - returns $default
  *
  * No notice or warning is ever triggered
  *
