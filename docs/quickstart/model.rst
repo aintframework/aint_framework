@@ -49,7 +49,27 @@ of one table::
 
 The database is created in ``/albums_manager/database/data`` file. We're placing it in a separate directory as it's not really the source code. To connect to the database and share this connection statically with the whole app, we'll need ``app\model\db`` namespace::
 
-   todo: insert with comments
+   namespace app\model\db;
+
+   require_once 'app/model.php';
+   use app\model;
+   require_once 'aint/common.php';
+   use aint\common;
+   // including sqlite platform and driver packages
+   require_once 'aint/db/platform/sqlite.php';
+   require_once 'aint/db/driver/pdo.php';
+
+   const driver = 'aint\db\driver\pdo';
+   const platform = 'aint\db\platform\sqlite';
+
+   function db_connect() {
+       static $resource;
+       if ($resource === null) { // we'll only connect to the db once
+           $db_connect = driver . '\db_connect';
+           $resource = $db_connect(model\get_app_config()['db']);
+       }
+       return $resource;
+   }
 
 This function uses model configuration that we add to ``src/app/model/configs/app.inc``::
 
@@ -64,7 +84,43 @@ This function uses model configuration that we add to ``src/app/model/configs/ap
 
 Model for this app is designed to use the `Table Data Gateway <http://martinfowler.com/eaaCatalog/tableDataGateway.html>`_ pattern, with ``app\model\db\albums_table`` being this gateway. Let's create it as well, adding functions required to read, write, update and delete data from the ``albums`` table. We'll need them all::
 
-    insert with comments
+    namespace app\model\db\albums_table;
+
+    require_once 'app/model/db.php';
+    use app\model\db;
+    require_once 'aint/db/table.php';
+
+    const table = 'albums';
+
+    /**
+     * Partial application,
+     * function delegating calls to aint\db\table package
+     * adding platform and driver parameters
+     *
+     * @return mixed
+     */
+    function call_table_func() {
+        $args = func_get_args();
+        $func = 'aint\db\table\\' . array_shift($args);
+        $args = array_merge([db\db_connect(), db\platform, db\driver, table], $args);
+        return call_user_func_array($func, $args);
+    }
+
+    function select(array $where = []) {
+        return call_table_func('select', $where);
+    }
+
+    function insert(array $data) {
+        return call_table_func('insert', $data);
+    }
+
+    function update($data, $where = []) {
+        return call_table_func('update', $data, $where);
+    }
+
+    function delete(array $where = []) {
+        return call_table_func('delete', $where);
+    }
 
 Notice, while framework is being used for the actual work, to wire it into your app you have to write all the functions you need inside the app's namespace. This idea is used for extending anything in **aint framework** and has functional programming paradigm behind it.
 

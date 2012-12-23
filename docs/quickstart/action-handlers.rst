@@ -36,7 +36,7 @@ To make the application list albums on the index page instead of the default "We
 
     function index_action() {
         // does nothing, simply delegates
-        return albums\list_action();
+        return \app\controller\actions\albums\list_action();
     }
 
 To have all this working now, we'll also need to create some simple templates and have them rendered. Create these four files and leave them empty for now:
@@ -70,7 +70,20 @@ And make the change in the controllers::
         return view\render('albums/delete');
     }
 
+Make sure the following links work:
+
+`Index/List <http://localhost:8080/>`_
+
+`Add <http://localhost:8080/albums/add>`_
+
+`Edit <http://localhost:8080/albums/edit>`_
+
+`Delete <http://localhost:8080/albums/delete>`_
+
+By the way, you can make sure the default error handler also works: `<http://localhost:8080/badurl>`_
+
 Let's now drop in some logic, i.e. :doc:`The Model </quickstart/model>`
 
 .. note::
     Find out more about recommended application structure :doc:`in this tutorial </guides/structure>`
+

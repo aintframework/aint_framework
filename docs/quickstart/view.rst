@@ -72,7 +72,7 @@ and ``add.phtml``::
     <h1><?= htmlspecialchars($title) ?></h1>
     <p><?= helpers\album_form('/albums/add') ?></p>
 
-As the HTML form in both cases is almost the same and duplication of code is never good we move the common html to another file, ``/src/app/view/templates/album_add.phtml``::
+As the HTML form in both cases is almost the same and duplication of code is never good we move the common html to another file, ``/src/app/view/templates/album_form.phtml``::
 
     <form action="<?= $action ?>" method="post" class="form-horizontal well">
         <fieldset>
@@ -98,7 +98,7 @@ As the HTML form in both cases is almost the same and duplication of code is nev
         </fieldset>
     </form>
 
-to simplify things even further, we introduce the ``app\view\helpers\album_form`` function::
+to simplify things further, we introduce the ``app\view\helpers\album_form`` function::
 
     function album_form($action, $album = []) {
         $default_album_data = [
