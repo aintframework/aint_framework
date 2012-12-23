@@ -3,30 +3,25 @@ Introduction
 
 Overview
 --------
-
 **aint framework** is a functional and procedural programming framework for modern PHP (at least PHP version 5.4 is required).
 
 Object Oriented Programming has conquered the world of PHP and now is the mainstream programming paradigm for creating PHP web applications. **aint framework** offers an alternative way of approaching, with the two key concepts being: *data* and *functions* to process it. It does not apply any additional restrictions.
 
-The framework consists of namespaces or packages. For example, ``aint\mvc`` namespace includes other subpackages with functions for routing and dispatching an http request.
+The framework consists of namespaces or packages. For example, ``aint\mvc`` namespace includes functions for routing and dispatching an http request.
 
-There is practically no learning curve to **aint framework**. Just like with the good old plain PHP: you have functions,  you call them with parameters plus you write your own functions. However, novice developers may find it easier to write potentially bad code, because of the lack of restrictions (unlike in OOP).
-
-One of the key ideas behind **aint framework**, based on experience of the authors: if somebody has to write bad/quick/dirty code for whatever reason - OOP only makes it worse.
+There is practically no learning curve to **aint framework**. Just like with the good old plain PHP: you have functions,  you call them with parameters and you write your own functions. However, novice developers may find it easier to write potentially bad code, because of the lack of restrictions (unlike in OOP).
 
 A few facts about **aint framework**:
 
-1. PHPUnit library is used for testing
-2. Unique :doc:`coding standard <development/standard>`
+1. `PHPUnit <www.phpunit.de/manual/current/en/installation.html>`_ library is used for testing
+2. Unique :doc:`coding standard </development/standard>`
 3. Data is presented with PHP's built-in types such as integer, string, array
-4. PHP classes are only used to present errors (via exceptions mechanism)
+4. PHP classes are only used to :doc:`present errors </guides/error-handling>` (via exceptions mechanism)
 5. There are no static dependencies on data in the framework's code
 
 Installation
 ------------
-Recommended way of starting a project is to use the specially prepared :doc:`quickstart/skeleton`.
-
-If you use composer for your project, add this to your ``composer.json``::
+\1. If you use `composer <http://getcomposer.org/>`_ for your project, add this to your ``composer.json``::
 
    "require": {
         "aintframework/aint_framework": "dev-master"
@@ -34,7 +29,9 @@ If you use composer for your project, add this to your ``composer.json``::
 
 and install the dependency.
 
-Alternatively, download the framework from `the GitHub page <https://github.com/aintframework/aint_framework>`_.
+\2. Alternatively, download the framework from `the GitHub page <https://github.com/aintframework/aint_framework>`_.
+
+\3. Recommended way of starting a project is to use :doc:`quickstart/skeleton`.
 
 Usage
 ^^^^^

@@ -3,24 +3,66 @@ Model
 
 The `Service Layer <http://martinfowler.com/eaaCatalog/serviceLayer.html>`_ of our model will be the ``app\model\albums`` namespace. As it's a very simple, typical CRUD application, the facade of the model will look almost the same as the public interface (the controller)::
 
-    todo: insert with comments
+    namespace app\model\albums;
 
-What differs this interface from the controller's one is an additional function to view a particular album. It's needed to show the information in the html form, when modifying an existing album.
+    /**
+     * Parameters of an album
+     */
+    const param_id = 'id',
+          param_title = 'title',
+          param_artist = 'artist';
 
-As decided we'll store albums records in a SQLite database of one table::
+    function list_albums() {
+        // ...
+    }
 
-    todo: insert sql
+    function add_album($data) {
+        // ...
+    }
 
-The database we'll create as ``/albums_manager/database/data`` file as it's not really the source code. To connect to the database and share this connection statically with the whole app, we'll need ``app\model\db`` namespace::
+    function get_album($id) {
+        // ...
+    }
+
+    function delete_album($id) {
+        // ...
+    }
+
+    function edit_album($id, $data) {
+        // ...
+    }
+
+What's different is the additional ``get_album`` function to view one particular album. It's needed to show the information in the html form, when modifying an existing album.
+
+As decided we'll store albums records in a SQLite database::
+
+    mkdir database
+    sqlite3 database/data
+
+of one table::
+
+    create table albums (
+        id integer primary key,
+        title varchar(250),
+        artist varchar(250)
+    );
+
+The database is created in ``/albums_manager/database/data`` file. We're placing it in a separate directory as it's not really the source code. To connect to the database and share this connection statically with the whole app, we'll need ``app\model\db`` namespace::
 
    todo: insert with comments
 
+This function uses model configuration that we add to ``src/app/model/configs/app.inc``::
+
+    return [
+        'db' => [
+            'dns' => 'sqlite:/my/projects/dir/database/data'
+        ]
+    ];
+
 .. note::
-    Read more about managing shared and not shared dependencies :doc:`in this tutorial </guides/dependencies>`
+    You can override this and any other setting locally, by creating ``app.local.inc`` file in the same directory.
 
-TODO: db config, local config
-
-Model for this app is designed to use the `Table Data Gateway <http://martinfowler.com/eaaCatalog/tableDataGateway.html>`_ pattern, with ``app\model\db\albums_table`` being this gateway. Let's create it as well, adding functions required to read, write, update and delete data from the ``albums`` table::
+Model for this app is designed to use the `Table Data Gateway <http://martinfowler.com/eaaCatalog/tableDataGateway.html>`_ pattern, with ``app\model\db\albums_table`` being this gateway. Let's create it as well, adding functions required to read, write, update and delete data from the ``albums`` table. We'll need them all::
 
     insert with comments
 
@@ -33,11 +75,98 @@ Instead of configuring instances, changing the *state* to suit your needs, like 
 
 Every function, essentially, is a proxy, a `partial application <http://en.wikipedia.org/wiki/Partial_application>`_ to the table gateway implementation provided by the framework. We specify namespaces for ``platform`` and ``driver`` to use.
 
+.. note::
+    Read more about managing shared and not shared dependencies :doc:`in this tutorial </guides/dependencies>`
+
+Let's return to the Service Layer, ``app\model\albums`` now and fill in missing details::
+
+    namespace app\model\albums;
+
+    // app uses table gateway pattern:
+    require_once 'app/model/db/albums_table.php';
+    use app\model\db\albums_table;
+
+    /**
+     * Parameters of an album
+     */
+    const param_id = 'id',
+          param_title = 'title',
+          param_artist = 'artist';
+
+    function list_albums() {
+        // simply return all records from the table
+        return albums_table\select();
+    }
+
+    function add_album($data) {
+        // insert data into the table
+        albums_table\insert($data);
+    }
+
+    function get_album($id) {
+        // look up all records in the table with id provided and return the first one
+        return current(albums_table\select(['id' => $id]));
+    }
+
+    function delete_album($id) {
+        // removes records from db with id provided
+        albums_table\delete(['id' => $id]);
+    }
+
+    function edit_album($id, $data) {
+        // updates records in db fulfilling the id = ? constraint with the data array provided
+        albums_table\update($data, ['id' => $id]);
+    }
+
+
 Wiring Model and Controller together
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
 Let's return to the controller we prepared in the previous section::
 
-    todo insert with new comments explaining all the additions
+    namespace app\controller\actions\albums;
+
+    require_once 'app/model/albums.php';
+    use app\model\albums as albums_model;
+    require_once 'app/view.php';
+    use app\view;
+    require_once 'aint/http.php';
+    use aint\http;
+
+    function list_action() {
+        return view\render('albums/list',
+            // passing the list of albums to the template
+            ['albums' => albums_model\list_albums()]);
+    }
+
+    function add_action($request) {
+        if (!http\is_post($request)) // if this isn't a POST request
+            return view\render('albums/add'); // we simply show the HTML form
+        else {
+            // if it is a POST request, we add the new
+            albums_model\add_album($request['params']);
+            // and redirect to the index page
+            return http\build_redirect('/');
+        }
+    }
+
+    function edit_action($request, $params) {
+        if (!http\is_post($request)) // if this isn't a POST request
+            return view\render('albums/edit',  // we show the HTML form
+                // filling current album data in the form
+                ['album' => albums_model\get_album($params['id'])]);
+        else {
+            // if it is a POST request, we update the data in the model
+            albums_model\edit_album($params['id'], $request['params']);
+            // and redirect to the index page
+            return http\build_redirect('/');
+        }
+    }
+
+    function delete_action($request, $params) {
+        // ask the model to delete the album
+        albums_model\delete_album($params['id']);
+        // and redirect to the index page
+        return http\build_redirect('/');
+    }
 
 The only missing part now is :doc:`the View </quickstart/view>`

@@ -1,7 +1,6 @@
 Controllers and Routing
 =======================
-
-Skeleton application uses the ``aint\mvc\routing\route_segment`` function for routing. We'll use it for our controllers as well. We'll create a namespace for albums-related controllers: ``app\controller\actions\albums`` and add the four action-functions to it::
+Skeleton application uses ``aint\mvc\routing\route_segment`` function for routing. We'll use it for our four new pages as well. We'll create a package to hold the action functions: ``/src/app/controller/actions/albums.php`` and add there the ones that we need::
 
     <?php
     namespace app\controller\actions\albums;
@@ -22,7 +21,9 @@ Skeleton application uses the ``aint\mvc\routing\route_segment`` function for ro
 
     }
 
-``route_segment`` will route ``/albums/add`` uri to ``app\controller\actions\albums\add_action`` function. ``$request`` holds data about the current HTTP request, while ``$params`` contains parameters of the route. For instance, ``/albums/edit/id/123`` will be routed to ``app\controller\actions\albums\edit_action`` with ``$params`` being this array: ``['id' => 123]``.
+Notice, here and further the name of the package file always corresponds to the namespace. It is by convention we use for this demo and for the framework itself. (Nothing is enforced in **aint framework**).
+
+``route_segment`` will route ``/albums/add`` uri to ``app\controller\actions\albums\add_action`` function. ``$request`` holds data about the current HTTP request, while ``$params`` contains parameters of the route. For instance, ``/albums/edit/id/123`` will be routed to ``app\controller\actions\albums\edit_action`` with ``$params`` = ``['id' => 123]``.
 
 We'll need to "enable" the new actions namespace by adding it to ``app\controller``::
 
@@ -31,9 +32,10 @@ We'll need to "enable" the new actions namespace by adding it to ``app\controlle
     require_once 'app/controller/actions/errors.php';
     require_once 'app/controller/actions/albums.php'; // - adding this
 
-To have our application list albums on the index page, we'll change the ``app\controller\actions\index\index_action`` like this::
+To make the application list albums on the index page instead of the default "Welcome" page, we'll change the ``app\controller\actions\index\index_action`` like this::
 
     function index_action() {
+        // does nothing, simply delegates
         return albums\list_action();
     }
 
@@ -48,6 +50,7 @@ And make the change in the controllers::
 
     namespace app\controller\actions\albums;
 
+    // including the app's view package to be able to render response:
     require_once 'app/view.php';
     use app\view;
 

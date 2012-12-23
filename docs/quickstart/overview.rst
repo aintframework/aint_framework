@@ -8,7 +8,7 @@ The application is an online albums manager, allowing you to create, edit, delet
 * edit (or update) an existing album
 * delete an existing album
 
-To store information we'll use a relational database. Could be anything, but for demonstration purposes we'll go with a SQLite3 database. One table is needed to store the albums records with these being an album characteristics:
+To store information we'll use a relational database. Could be anything, but for demonstration purposes we'll go with a `SQLite3 <http://www.sqlite.org/>`_ database. One table is needed to store the albums records with these being an album characteristics:
 
 * id (integer, auto-increment) - a unique album identifier
 * artist (string)
