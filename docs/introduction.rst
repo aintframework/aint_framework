@@ -37,13 +37,19 @@ Usage
 ^^^^^
 At the moment, packages (namespaces) autoloading is `not achievable with PHP <http://blog.lcf.name/2012/06/php-namespace-autoload.html>`_, so all namespaces have to be included into the project explicitly.
 
-It's recommended to add **aint framework** to the ``include_path``::
+It's recommended to add **aint framework** to the ``include_path``:
 
+.. code-block:: php
+
+ <?php
  set_include_path(get_include_path()
      . PATH_SEPARATOR . realpath(dirname(__FILE__) . '/../vendor/aintframework/aint_framework/library'));
 
-with that you can use framework's features as follows::
+with that you can use framework's features as follows:
 
+.. code-block:: php
+
+    <?php
     require_once 'aint/mvc/dispatching.php';
     use aint\mvc\dispatching;
 

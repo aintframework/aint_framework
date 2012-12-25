@@ -14,15 +14,17 @@ This is the top directory of the skeleton project::
 
 ``src`` - is the container for the actual code. All the backend programming happens inside.
 
-``www`` is the document root for the web server, it contains various public resources such as images, styles. It also serves the ``index.php``, the entry point of your application. It looks like this::
+``www`` is the document root for the web server, it contains various public resources such as images, styles. It also serves the ``index.php``, the entry point of your application. It looks like this:
+
+.. code-block:: php
 
     <?php
-        set_include_path(get_include_path()
-            . PATH_SEPARATOR . realpath(dirname(__FILE__) . '/../src')
-            . PATH_SEPARATOR . realpath(dirname(__FILE__) . '/../vendor/aintframework/aint_framework/library'));
+    set_include_path(get_include_path()
+        . PATH_SEPARATOR . realpath(dirname(__FILE__) . '/../src')
+        . PATH_SEPARATOR . realpath(dirname(__FILE__) . '/../vendor/aintframework/aint_framework/library'));
 
-        require_once 'app/controller.php';
-        app\controller\run();
+    require_once 'app/controller.php';
+    app\controller\run();
 
 It does three things:
 1. Adds both application source and **aint framework** to ``include_path`` so their components can be included easily when needed.

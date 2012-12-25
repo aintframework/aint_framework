@@ -1,8 +1,11 @@
 Model
 =====
 
-The `Service Layer <http://martinfowler.com/eaaCatalog/serviceLayer.html>`_ of our model will be the ``app\model\albums`` namespace. As it's a very simple, typical CRUD application, the facade of the model will look almost the same as the public interface (the controller)::
+The `Service Layer <http://martinfowler.com/eaaCatalog/serviceLayer.html>`_ of our model will be the ``app\model\albums`` namespace. As it's a very simple, typical CRUD application, the facade of the model will look almost the same as the public interface (the controller):
 
+.. code-block:: php
+
+    <?php
     namespace app\model\albums;
 
     /**
@@ -47,8 +50,11 @@ of one table::
         artist varchar(250)
     );
 
-The database is created in ``/albums_manager/database/data`` file. We're placing it in a separate directory as it's not really the source code. To connect to the database and share this connection statically with the whole app, we'll need ``app\model\db`` namespace::
+The database is created in ``/albums_manager/database/data`` file. We're placing it in a separate directory as it's not really the source code. To connect to the database and share this connection statically with the whole app, we'll need ``app\model\db`` namespace:
 
+.. code-block:: php
+
+   <?php
    namespace app\model\db;
 
    require_once 'app/model.php';
@@ -71,8 +77,11 @@ The database is created in ``/albums_manager/database/data`` file. We're placing
        return $resource;
    }
 
-This function uses model configuration that we add to ``src/app/model/configs/app.inc``::
+This function uses model configuration that we add to ``src/app/model/configs/app.inc``:
 
+.. code-block:: php
+
+    <?php
     return [
         'db' => [
             'dns' => 'sqlite:/my/projects/dir/database/data'
@@ -82,8 +91,11 @@ This function uses model configuration that we add to ``src/app/model/configs/ap
 .. note::
     You can override this and any other setting locally, by creating ``app.local.inc`` file in the same directory.
 
-Model for this app is designed to use the `Table Data Gateway <http://martinfowler.com/eaaCatalog/tableDataGateway.html>`_ pattern, with ``app\model\db\albums_table`` being this gateway. Let's create it as well, adding functions required to read, write, update and delete data from the ``albums`` table. We'll need them all::
+Model for this app is designed to use the `Table Data Gateway <http://martinfowler.com/eaaCatalog/tableDataGateway.html>`_ pattern, with ``app\model\db\albums_table`` being this gateway. Let's create it as well, adding functions required to read, write, update and delete data from the ``albums`` table. We'll need them all:
 
+.. code-block:: php
+
+    <?php
     namespace app\model\db\albums_table;
 
     require_once 'app/model/db.php';
@@ -129,13 +141,16 @@ Instead of configuring instances, changing the *state* to suit your needs, like 
 .. note::
     Read more :doc:`here </guides/extension-over-configuration>`
 
-Every function, essentially, is a proxy, a `partial application <http://en.wikipedia.org/wiki/Partial_application>`_ to the table gateway implementation provided by the framework. We specify namespaces for ``platform`` and ``driver`` to use.
+Every function, essentially, is a `partial application <http://en.wikipedia.org/wiki/Partial_application>`_, a proxy to the table gateway implementation provided by the framework. We specify namespaces for ``platform`` and ``driver`` to use.
 
 .. note::
     Read more about managing shared and not shared dependencies :doc:`in this tutorial </guides/dependencies>`
 
-Let's return to the Service Layer, ``app\model\albums`` now and fill in missing details::
+Let's return to the Service Layer, ``app\model\albums`` now and fill in missing details:
 
+.. code-block:: php
+
+    <?php
     namespace app\model\albums;
 
     // app uses table gateway pattern:
@@ -177,7 +192,11 @@ Let's return to the Service Layer, ``app\model\albums`` now and fill in missing 
 
 Wiring Model and Controller together
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Let's return to the controller we prepared in the previous section::
+Let's return to the controller we prepared in the previous section:
+
+.. code-block:: php
+
+    <?php
 
     namespace app\controller\actions\albums;
 

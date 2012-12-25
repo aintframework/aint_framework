@@ -1,6 +1,8 @@
 Controllers and Routing
 =======================
-Skeleton application uses ``aint\mvc\routing\route_segment`` function for routing. We'll use it for our four new pages as well. We'll create a package to hold the action functions: ``/src/app/controller/actions/albums.php`` and add there the ones that we need::
+Skeleton application uses ``aint\mvc\routing\route_segment`` function for routing. We'll use it for our four new pages as well. We'll create a package to hold the action functions: ``/src/app/controller/actions/albums.php`` and add there the ones that we need:
+
+.. code-block:: php
 
     <?php
     namespace app\controller\actions\albums;
@@ -25,15 +27,21 @@ Notice, here and further the name of the package file always corresponds to the 
 
 ``route_segment`` will route ``/albums/add`` uri to ``app\controller\actions\albums\add_action`` function. ``$request`` holds data about the current HTTP request, while ``$params`` contains parameters of the route. For instance, ``/albums/edit/id/123`` will be routed to ``app\controller\actions\albums\edit_action`` with ``$params`` = ``['id' => 123]``.
 
-We'll need to "enable" the new actions namespace by adding it to ``app\controller``::
+We'll need to "enable" the new actions namespace by adding it to ``app\controller``:
 
+.. code-block:: php
+
+    <?php
     // actions
     require_once 'app/controller/actions/index.php';
     require_once 'app/controller/actions/errors.php';
     require_once 'app/controller/actions/albums.php'; // - adding this
 
-To make the application list albums on the index page instead of the default "Welcome" page, we'll change the ``app\controller\actions\index\index_action`` like this::
+To make the application list albums on the index page instead of the default "Welcome" page, we'll change the ``app\controller\actions\index\index_action`` like this:
 
+.. code-block:: php
+
+    <?php
     function index_action() {
         // does nothing, simply delegates
         return \app\controller\actions\albums\list_action();
@@ -46,8 +54,11 @@ To have all this working now, we'll also need to create some simple templates an
 * ``/src/app/view/templates/albums/delete.phtml``
 * ``/src/app/view/templates/albums/list.phtml``
 
-And make the change in the controllers::
+And make the change in the controllers:
 
+.. code-block:: php
+
+    <?php
     namespace app\controller\actions\albums;
 
     // including the app's view package to be able to render response:
@@ -71,14 +82,7 @@ And make the change in the controllers::
     }
 
 Make sure the following links work:
-
-`Index/List <http://localhost:8080/>`_
-
-`Add <http://localhost:8080/albums/add>`_
-
-`Edit <http://localhost:8080/albums/edit>`_
-
-`Delete <http://localhost:8080/albums/delete>`_
+`Index/List <http://localhost:8080/>`_ | `Add <http://localhost:8080/albums/add>`_ | `Edit <http://localhost:8080/albums/edit>`_ | `Delete <http://localhost:8080/albums/delete>`_
 
 By the way, you can make sure the default error handler also works: `<http://localhost:8080/badurl>`_
 
