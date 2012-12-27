@@ -22,4 +22,5 @@ Next, run the built-in web server::
 Your project is now running. Access `<http://localhost:8080>`_ in your browser:
 
 .. image:: ../_static/quickstart/skeleton/localhost.png
+    :width: 940 px
 
