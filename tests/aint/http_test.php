@@ -23,6 +23,8 @@ class http_test extends \PHPUnit_Framework_TestCase {
         $_GET['b'] = 4;
         $_POST['x'] = 4;
         $_POST['y'] = 5;
+        $_SERVER['HTTP_CONTENT_TYPE'] = 'application/xml';
+        $_SERVER['HTTP_ACCEPT'] = 'application/json';
 
         $request = http\build_request_from_globals();
         $expected = [
@@ -33,7 +35,8 @@ class http_test extends \PHPUnit_Framework_TestCase {
                 'a' => 3, 'b' => 4,
                 'x' => 4, 'y' => 5
             ],
-            http\request_method => 'POST'
+            http\request_method => 'POST',
+            http\request_headers => array('Content-Type' => 'application/xml', 'Accept' => 'application/json')
         ];
         $this->assertEquals($expected, $request);
     }

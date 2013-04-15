@@ -11,7 +11,8 @@ const request_scheme = 'scheme',
       request_body = 'body',
       request_path = 'path',
       request_params = 'params',
-      request_method = 'method';
+      request_method = 'method',
+      request_headers = 'headers';
 
 /**
  * Http Response data
@@ -42,7 +43,8 @@ function build_request_from_globals() {
         request_body => file_get_contents("php://input"),
         request_path => trim($path, '/'),
         request_params => array_merge($_GET, $_POST), // todo make these separate, provide functions
-        request_method => $_SERVER['REQUEST_METHOD']
+        request_method => $_SERVER['REQUEST_METHOD'],
+        request_headers => get_headers_from_globals(),
     ];
 }
 
@@ -146,4 +148,26 @@ function send_response($response) {
 function response_status($response, $status) {
     $response[response_status] = $status;
     return $response;
+}
+
+/**
+ * Extracts http headers from current context
+ *
+ * Uses getallheaders function if available
+ *
+ * @return array
+ */
+function get_headers_from_globals() {
+    if (function_exists('getallheaders'))
+        return getallheaders();
+    else {
+        $headers = [];
+        foreach($_SERVER as $header => $value)
+            if (strpos($header, 'HTTP_') === 0) {
+                $formatted_header_name =
+                    str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($header, 5)))));
+                $headers[$formatted_header_name] = $value;
+            }
+        return $headers;
+    }
 }
