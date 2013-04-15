@@ -1,19 +1,22 @@
 {
-    "name":"aintframework/aint_framework",
-    "description":"Functional and Procedural programming framework for PHP",
-    "type":"library",
-    "keywords":[
+    "name": "aintframework/aint_framework",
+    "description": "Functional and Procedural programming framework for PHP",
+    "type": "library",
+    "keywords": [
         "aint"
     ],
-    "homepage":"http://aint.lcf.name/",
-    "license":"BSD-3-Clause",
-    "require":{
-        "php":">=5.4.0"
+    "homepage": "http://aint.lcf.name/",
+    "license": "BSD-3-Clause",
+    "require": {
+        "php": ">=5.4.0"
     },
-    "authors":[
+    "require-dev": {
+        "phpunit/PHPUnit": "3.7.*"
+    },
+    "authors": [
         {
-            "name":"Alexander Steshenko",
-            "email":"lcfsoft@gmail.com"
+            "name": "Alexander Steshenko",
+            "email": "lcfsoft@gmail.com"
         }
     ]
 }
