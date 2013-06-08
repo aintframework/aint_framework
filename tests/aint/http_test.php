@@ -92,6 +92,47 @@ class http_test extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(['Location: /test2'], $response[http\response_headers]);
     }
 
+    public function test_get_cookie_value_header_not_set() {
+        $request = [
+            http\request_headers => [
+                'Content-Type' => 'application/xml',
+                'Accept' => 'application/json'
+            ]
+        ];
+        $this->assertNull(http\get_cookie_value($request, 'session'));
+    }
+
+    public function test_get_cookie_value_not_found() {
+        $request = [
+            http\request_headers => [
+                'Cookie' => 'a=test;b=test2',
+                'Content-Type' => 'application/xml',
+                'Accept' => 'application/json'
+            ]
+        ];
+        $this->assertNull(http\get_cookie_value($request, 'c'));
+    }
+
+    public function test_get_cookie_value() {
+        $request = [
+            http\request_headers => [
+                'Cookie' => 'a=test;b=test2;c=test3',
+                'Content-Type' => 'application/xml',
+                'Accept' => 'application/json'
+            ]
+        ];
+        $this->assertEquals('test2', http\get_cookie_value($request, 'b'));
+    }
+
+    public function test_add_cookie_header() {
+        $response = http\build_response('body', 200, ['Content-Type: text/plain']);
+        $response = http\add_cookie_header($response, 'session', '12345test', strtotime('2013-12-01 05:31:12'));
+        $this->assertEquals($response[http\response_headers], [
+            'Content-Type: text/plain',
+            'Set-Cookie: session=12345test; Expires=Sunday, 01-Dec-13 05:31:12 UTC',
+        ]);
+    }
+
     public static $header_called_with = [];
 
     public function test_send_response() {

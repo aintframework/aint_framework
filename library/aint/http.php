@@ -128,6 +128,67 @@ function redirect($response, $location) {
 }
 
 /**
+ * Adds cookie header to the response array passed
+ *
+ * @param array $response
+ * @param string $name Cookie name
+ * @param string $value Value
+ * @param integer $expires Timestamp
+ * @param string $path
+ * @param string $domain
+ * @param boolean $secure
+ * @param boolean $http_only
+ * @param null $max_age
+ * @param null $version
+ * @return array
+ */
+function add_cookie_header(array $response, $name = null, $value = null, $expires = null, $path = null, $domain = null,
+                           $secure = false, $http_only = false, $max_age = null, $version = null) {
+    if (strpos($value, '"')!==false)
+        $value = '"' . urlencode(str_replace('"', '', $value)) . '"';
+    else
+        $value = urlencode($value);
+
+    $cookie_string = $name . '=' . $value;
+    if ($version !== null)
+        $cookie_string .= '; Version=' . $version;
+    if ($max_age !== null)
+        $cookie_string .= '; Max-Age=' . $max_age;
+    if ($expires !== null)
+        $cookie_string .= '; Expires=' . date(DATE_COOKIE, $expires);
+    if ($domain !== null)
+        $cookie_string .= '; Domain=' . $domain;
+    if ($path !== null)
+        $cookie_string .= '; Path=' . $path;
+    if ($secure)
+        $cookie_string .= '; Secure';
+    if ($http_only)
+        $cookie_string .= '; HttpOnly';
+
+    $response[response_headers][] = 'Set-Cookie: ' . $cookie_string;
+    return $response;
+}
+
+/**
+ * Returns value of a cookie by name
+ *
+ * @param $request
+ * @param $name
+ * @return mixed|null
+ */
+function get_cookie_value($request, $name) {
+    if (isset($request[request_headers]['Cookie'])) {
+        $key_value_pairs = preg_split('#;\s*#', $request[request_headers]['Cookie']);
+        foreach ($key_value_pairs as $key_value) {
+            list($key, $value) = preg_split('#=\s*#', $key_value, 2);
+            if ($key == $name)
+                return $value;
+        }
+    }
+    return null;
+}
+
+/**
  * Outputs response data
  *
  * @param $response
